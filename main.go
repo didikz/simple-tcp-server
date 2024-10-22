@@ -71,6 +71,10 @@ func (s *Server) ReadConnection(conn net.Conn) {
 			continue
 		}
 
+		if n == 0 || string(buf[:n]) == "\r\n" {
+			continue
+		}
+
 		s.msgchan <- Message{
 			source:  conn.RemoteAddr().String(),
 			payload: buf[:n],
